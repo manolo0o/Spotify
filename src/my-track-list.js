@@ -13,11 +13,11 @@ export class myTrack extends LitElement{
     }
 
     async loadSong() {
-        const url = 'https://spotify23.p.rapidapi.com/search/?type=multi&offset=0&limit=10&numberOfTopResults=5';
+        const url = 'https://spotify23.p.rapidapi.com/search/?q=%3CREQUIRED%3E&type=multi&offset=0&limit=10&numberOfTopResults=5';
         const options = {
             method: 'GET',
             headers: {
-                'X-RapidAPI-Key': 'ea0daa55bamsh2ab0e032ca45e94p166e2djsne7c218f3850e',
+                'X-RapidAPI-Key': '39f51e3096mshdd46529405e5e25p1c725djsn0b4c8ca924b9',
                 'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
             }
     };
