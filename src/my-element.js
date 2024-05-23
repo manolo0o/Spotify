@@ -1,158 +1,107 @@
 import { LitElement, css, html } from 'lit'
-class Myelement extends LitElement  {
-    constructor(){
-        super();
-        this.shuffleButton = "/public/shuffleButton.svg";
-    }
-    static styles =css`
-        .principal___container{
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: end;
-            overflow-y: hidden;
-        }   
-
-        .container{
-            width: 25%;
-            height: 100vh; 
-            border: 2px solid black;   
-            color: white;
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
-
-        .title__container{
-            width: 100%;
-            height:15%;
-            border: 2px solid black;
-            color:black;
-        }
-        .title__container {
-            color: black;
-            
-        }
-            
-        .cards{
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            height: 10%;
-            border: 2px solid black;
-        }
-        .img__select{
-            width:30%;
-            border: 2px solid black;
-            height: 100%;
-        }
-        .song__duration{
-            width:15%;
-            border: 2px solid black;
-            height: 100%;
-        }
+import { sortSongsForPopularity} from "./modules/musicData.js"
 
 
-        ::-webkit-scrollbar {
-            width: 0.6vh; 
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 5px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 5px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555; 
-            border-radius: 5px;
-        }
+export class Cardnewmusic extends LitElement {
+
+  static properties = {
+    data: { type: Array }
+  }
+
+  constructor() {
+    super();
+    this.data = sortSongsForPopularity()
+    //this.dataAlbumes = ["18NOKLkZETa4sWwLMIm0UZ", "444LqH6QlvR62nY8Vxn37u", "5r36AJ6VOJtp00oxSkBZ5h", "4jox3ip1I39DFC2B7R5qLH"]
+  }
+
+  static styles = css`
+      :root{
+        --grey-1: #333333;
+        --grey-2: #4F4F4F;
+        --grey-3: #828282
+      }
+      *{
+        /*border: .2px solid black;*/
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .container__cards{
+        width: 315px;
+        height: 345px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        flex: 1;
+        align-items: center;
+        overflow-x: scroll
+      }
+      .container__cards::-webkit-scrollbar {
+        display: none
+      }
+      .container__card__new__music{
+        width: 48%;
+        height: 60%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden
+      }
+      .new__music__img{
+        width: 95%;
+        display: flex;
+        border-radius: 5%;
+        overflow: hidden;
+      }
+      .new__music__img img{
+        object-fit: contain;
+        width: 100%;
+        border: none;
+      }
+      .new__music__info{
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow-x: hidden;
+        padding: 0 5px;
+      }
+      .new__music__info h4{
+        color: var(--grey-1);
+        text-transform: capitalize;
+        font-size: 1.3vw;
+        text-overflow: hidden
+      }
+      .new__music__info p{
+        color: var(--grey-2);
+        font-size: 1vw;
+        text-overflow: hidden
+      }
+      .new__music__info span{
+        color: var(--grey-3);
+        text-overflow: hidden
+      }
+
+  `
+
+  render(){
+    return html`
+    <div id="container__cards" class="container__cards">
+      ${this.data.map(val => html`
+      <div class="container__card__new__music">
+        <div class="new__music__img">
+          <img src=${val.album.images[1].url} alt="">
+        </div>
+        <div class="new__music__info">
+          <h4>${val.album.name}</h4>
+          <p>${val.album.artists[0].name}, <span>${new Date(val.album.release_date).getFullYear()}</span></p>
+        </div>
+      </div>
+      `)}
+    </div>
     `
-    render(){
-        return html`
-            <div class="principal___container">
-                <div class="container">
-                    <div class="title__container">
-                       <h1>Track list</h1>
-                       <box-icon name='shuffle'></box-icon>
-                       <box-icon name='repeat'></box-icon>
-                        <p>playing next</p>
-                    </div>
-                    <div class="cards">
-                        <div class="img__select">
-                            <img src="" alt="">
-                        </div>
-                        <div class="song__duration">
-                        </div>
-                    </div>
-                    <div class="cards">
-                        <div class="img__select">
-                            <img src="" alt="">
-                        </div>
-                        <div class="song__duration">
-                        </div>
-                    </div>
-                    <div class="cards">
-                        <div class="img__select">
-                            <img src="" alt="">
-                        </div>
-                        <div class="song__duration">
-                        </div>
-                    </div>
-                    <div class="cards">
-                        <div class="img__select">
-                            <img src="" alt="">
-                        </div>
-                        <div class="song__duration">
-                        </div>
-                    </div>
-                    <div class="cards">
-                        <div class="img__select">
-                            <img src="" alt="">
-                        </div>
-                        <div class="song__duration">
-                        </div>
-                    </div>
-                    <div class="cards">
-                        <div class="img__select">
-                            <img src="" alt="">
-                        </div>
-                        <div class="song__duration">
-                        </div>
-                    </div>    
-                    <div class="cards">
-                        <div class="img__select">
-                            <img src="" alt="">
-                        </div>
-                        <div class="song__duration">
-                        </div>
-                    </div>
-                    <div class="cards">
-                        <div class="img__select">
-                            <img src="" alt="">
-                        </div>
-                        <div class="song__duration">
-                        </div>
-                    </div>
-                    <div class="cards">
-                        <div class="img__select">
-                            <img src="" alt="">
-                        </div>
-                        <div class="song__duration">
-                        </div>
-                    </div>
-                    <div class="cards">
-                        <div class="img__select">
-                            <img src="" alt="">
-                        </div>
-                        <div class="song__duration">
-                        </div>
-                    </div>
-                
-                    
-                </div>
-            </div>
-    `
-    } 
+  }
 }
-customElements.define('my-element', Myelement)
+customElements.define('card-new-music', Cardnewmusic)
